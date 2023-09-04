@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -type f -name "*.gif" -exec basename {} \; | rev | cut -d '.' -f 2- | rev | LC_ALL=C sort -f
+find . -type f -name "*.gif" -exec sh -c 'for file; do echo "${file##*/}" | rev | cut -d "." -f 2- | rev; done' sh {} + | LC_ALL=C sort -f
