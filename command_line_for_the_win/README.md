@@ -1,6 +1,6 @@
 CMD CHALLENGE is a pretty cool game challenging you on Bash skills. Everything is done via the command line and the questions are becoming increasingly complicated. It’s a good training to improve your command line skills!
 
-	Steps I followed SFTP command-line tool:
+	Steps I followed to use the SFTP command-line tool:
 
 Open a terminal or command prompt on your local machine.
 Use the SFTP command-line tool to establish a connection to the sandbox environment. You will need the hostname, username, and password provided to you for the sandbox environment.
