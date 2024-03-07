@@ -6,7 +6,5 @@ shopt -s extglob
 
 LIST=$(ls)
 for i in $LIST; do
-	if [[ -f "$i" ]]; then
-		echo "${i#[0-9]*-}"
-	fi
+	echo "${i#[0-9]*-}"
 done
