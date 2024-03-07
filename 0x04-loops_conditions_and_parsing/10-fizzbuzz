@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Displays numbers from 1 to 100.
+#fizzbuzz logic
+
+for ((i=1; i<=100; i++)); do
+	(( i%15==0 )) && echo "FizzBuzz" && continue
+	(( i%3==0 )) && echo "Fizz" && continue
+	(( i%5==0 )) && echo "Buzz" && continue
+	echo "$i"
+done
