@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 # gives information about the school file.
-
 school="school"
-
-if [ -d "$school" ]; then
+if [ -e "$school" ]; then
 	echo "school file exists"
 
 	if [ -s "$school" ]; then
