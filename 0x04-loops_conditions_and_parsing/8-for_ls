@@ -2,6 +2,6 @@
 # Bash script that displays the content of the current directory.
 # In a list format.
 LIST=$(ls)
-for i in $LIST; do
+for i in [$LIST]; do
 	echo "${i#[0-9]*-}"
 done
