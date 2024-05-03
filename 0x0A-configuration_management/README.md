@@ -1,0 +1,5 @@
+				<h1>0x0A. Configuration management<h1>
+
+		<h3>Configuration Management with Puppet<h3>
+
+		This project focuses on implementing configuration management using Puppet, a widely-used tool in DevOps and SysAdmin practices. Puppet allows for automating the management of IT infrastructure by defining the desired state of systems in code. The project covers essential concepts such as Puppet's declarative language, resource types, attributes, and manifest syntax. Through a series of tasks, I learned to create Puppet manifests to manage files, install packages, and execute commands on target systems. By adhering to best practices and using tools like puppet-lint, users ensure their manifests are error-free and maintainable. Through hands-on tasks, I gained practical experience in automating system configuration, which is crucial for maintaining scalable and reliable infrastructure in today's IT environments.
