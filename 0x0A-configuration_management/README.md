@@ -5,7 +5,7 @@
 	a widely-used tool in DevOps and SysAdmin practices.
 	Puppet allows for automating the management of IT infrastructure by defining the desired state of systems in code.
 	The project covers essential concepts such as Puppet's declarative language,
-	resource types, attributes, and manifest syntax.
+	resource types e.g(file, package, exec, ...), attributes e.g(ensure, owner, mode, command, ...), and manifest syntax.
 	
 	The project comprises a series of tasks, where I create Puppet manifests to manage files,
 	install packages, and execute commands on target systems.
