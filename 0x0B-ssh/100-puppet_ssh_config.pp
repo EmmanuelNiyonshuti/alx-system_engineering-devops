@@ -1,10 +1,21 @@
-file{'/etc/ssh/ssh_config':
-  ensure  => 'present',
-  content => "\
-HOST 34.232.68.210
-        HOSTNAME 34.232.68.210
-        user ubuntu
-        PasswordAuthentication no
-        IdentityFile ~/.ssh/school
-	",
+include ::stdlib
+
+#This manifest file will make changes to the ssh client configuration file
+#Requirements:
+#       -SSH client configuration must be configured to use the private key ~/.ssh/school
+#       -SSH client configuration must be configured to refuse to authenticate using a password
+
+file_line{'PasswordAuthentication':
+    ensure => 'present',
+    line   => 'PasswordAuthentication no',
+    match  => '^#?PasswordAuthentication no',
+    path   => '/etc/ssh/ssh_config',
+
+}
+
+file_line {'IdentityFile':
+  ensure => 'present',
+  path   => '/etc/ssh/ssh_config',
+  line   => 'IdentityFile ~/.ssh/school',
+  match  => '^#?~/.ssh/school',
 }
