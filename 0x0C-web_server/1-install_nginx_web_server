@@ -12,6 +12,4 @@ echo "Hello World!" > /var/www/html/index.html
 
 #Restart enginx (systemctl is not allowed)
 
-nginx -t
-
-service nginx reload
+nginx -s reload
