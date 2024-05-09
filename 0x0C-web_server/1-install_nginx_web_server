@@ -11,9 +11,10 @@ apt-get install -y nginx
 
 echo "Hello World!" > /var/www/html/index.html
 
-sed -i 's|root /var/ww/html; |root /var/www/html; index index.html;|g' /etc/nginx/sites-available/default
-#Restart enginx (systemctl is not allowed)
+sed -i 's|root /var/www/html;|root /var/www/html; index index.html;|g' /etc/nginx/sites-available/default
 
+mkdir -p /var/log/nginx
+#Restart enginx (systemctl is not allowed)
 service nginx restart
 
 netstat -tulpn | grep :80
