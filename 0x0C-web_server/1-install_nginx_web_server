@@ -8,12 +8,9 @@ apt-get update
 
 apt-get install -y nginx
 
-cp /etc/nginx/sites-enabled/default  /etc/nginx/sites-enabled/default.bak
-
-cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bak
 
 echo "Hello World!" > /var/www/html/index.html
 
 #Restart enginx (systemctl is not allowed)
 
-nginx -s reload
+service nginx restart
