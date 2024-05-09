@@ -14,3 +14,5 @@ echo "Hello World!" > /var/www/html/index.html
 #Restart enginx (systemctl is not allowed)
 
 service nginx restart
+
+netstat -tulpn | grep :80
