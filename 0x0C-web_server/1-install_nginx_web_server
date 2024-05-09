@@ -11,13 +11,5 @@ apt-get install -y nginx
 
 echo "Hello World!" > /var/www/html/index.html
 
-str="
-    root /var/www/html/;
-    index index.html;
-"
-
-# Append the configurations to the existing server block
-sed -i "/server {/,/}/a $str" /etc/nginx/nginx.conf
-
 #Restart enginx (systemctl is not allowed)
 service nginx restart
