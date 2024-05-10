@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#Fix apache2 config to return "Hello holberton" page
+
+#accessed the docker container using
+docker container exec -it 0217dd0a6d33 bash
+
+#Checked the status of the apache service using
+service apache2 status
+
+#started the apache service using
+service apache2 start
+
+#noted the message about the server's fully qualified domain name
+
+#edited the ports.conf file to resolve the server name issue
+
+#restarted the apache service using
+service apache2 start
+
+#verify the status
+service apache2 status
+#exit the docker container
+exit
+#confirm the response from the apache server with
+curl 0:8080
+#boom "Hello Holberton"
