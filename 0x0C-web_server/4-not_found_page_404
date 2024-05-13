@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #configures nginx server on ubuntu machine 
-#so that /redirect_me redirects to another page.
-#The redirection must be a 301 Moved Permanently
+#the page must return HTTP 404 error code.
+#The page must contain the string Ceci n'est pas une page.
 
 #update package lists
 apt-get update
@@ -9,25 +9,23 @@ apt-get update
 #Install nginx
 apt-get install -y nginx
 
-#create a back up of the original nginx.conf file
-cp /etc/nginx/nginx.conf    /etc/nginx/nginx.conf.bak
+#create a 404.html  file in html directory
+echo "Ceci n'est pas une page" > /var/www/html/404.html
 
-
-#modify the nginx.conf file
-
-new="
-http {
-	server {
-		location {
-			return Ceci n'est pas une page=404;
-		}
+#add the error_page in sites-enabled directory
+e="
+	error_page 404 /404.html;
+	location = /404.html {
+      		root /var/www/html;
+      		internal;
 	}
-}
 "
+#save the config to a temp file and insert them in default file
+echo "$e" > temp.conf
 
-sed -i -e "s/$(sed -ne "1http" /etc/nginx/nginx.conf)/$new/" /etc/nginx/nginx.conf
+sed -i '/listen 80 default_server;/r tmp.conf' /etc/nginx/sites-enabled/default
 
-#echo "$new" > /etc/nginx/nginx/nginx.conf
+rm temp.conf
 
 #validate nginx configuration
 nginx -t
