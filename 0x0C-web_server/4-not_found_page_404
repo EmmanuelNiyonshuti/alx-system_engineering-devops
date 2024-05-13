@@ -23,7 +23,7 @@ e="
 #save the config to a temp file and insert them in default file
 echo "$e" > temp.conf
 
-sed -i '/listen 80 default_server;/r tmp.conf' /etc/nginx/sites-enabled/default
+sed -i '/listen 80 default_server;/r temp.conf' /etc/nginx/sites-enabled/default
 
 rm temp.conf
 
