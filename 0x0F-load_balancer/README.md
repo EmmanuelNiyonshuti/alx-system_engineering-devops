@@ -1,0 +1,4 @@
+
+                    0x0F. Load balancer
+
+        This project focuses on configuring a load balancer to enhance the redundancy and reliability of my provided web servers. With the addition of new servers, aiming to distribute incoming traffic evenly across multiple servers, thereby improving the scalability and fault tolerance of my infrastructure. The tasks involve setting up and configuring HAproxy on the load balancer server (gc-[STUDENT_ID]-lb-01-XXXXXXXXXX) to distribute traffic to web-01 and web-02 servers. Additionally, I customize the Nginx response headers on the web servers to include a custom header (X-Served-By) indicating the hostname of the server responding to the request. All configurations are automated using Bash scripts designed to configure brand new Ubuntu servers to meet the project requirements. The project emphasizes concepts such as load balancing, web stack debugging, and automation using Bash scripting.
