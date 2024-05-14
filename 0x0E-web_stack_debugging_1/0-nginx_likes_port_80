@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#install nginx and start it
+service nginx status
+
+service nginx start
