@@ -1,11 +1,33 @@
 #!/usr/bin/env bash
-#check if nginx is listening to port , check if it's running and start it if it's not and then curl localhost.
+# This script checks if Nginx is listening on port 80,
+# ensures it's running, and curls the server to verify its response.
+
+# Update package repositories
 apt-get update
-apt-get install nginx
-apt-get install net-tools
 
-netstat -lpdn
+# Install Nginx without user interaction
+apt-get install -y nginx
 
-service nginx status
-service nginx start
-curl localhost
+# Install net-tools to use netstat
+apt-get install -y net-tools
+
+# Check if Nginx is listening on port 80
+nginx_listening=$(netstat -lpdn | grep ':80 ')
+
+# If Nginx is not listening on port 80
+if [ -z "$nginx_listening" ]; then
+    # Start Nginx
+    service nginx start
+fi
+
+# Check Nginx status
+nginx_status=$(service nginx status)
+
+# If Nginx is not running
+if ! echo "$nginx_status" | grep -q "Active: active"; then
+    echo "Nginx is not running"
+    exit 1
+fi
+
+# Curl the server to verify its response
+curl 0:80
