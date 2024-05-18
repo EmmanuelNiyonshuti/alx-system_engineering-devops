@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#install nginx and start it
+#check if nginx is running and start it if it's not.
 service nginx status
 
 service nginx start
