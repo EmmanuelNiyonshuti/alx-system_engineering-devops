@@ -1,5 +1,5 @@
                             0x10. HTTPS SSL
-
+![alt text](image.png)
 This project aims to demonstrate the implementation of SSL termination using HAProxy on Ubuntu 16.04. SSL termination refers to the process of decrypting SSL-encrypted traffic at the load balancer (HAProxy), allowing it to inspect and route the traffic before forwarding it to the backend servers. This project specifically focuses on configuring HAProxy to accept encrypted traffic for the subdomain www, ensuring secure communication between clients and backend servers.
 
 Project Overview
