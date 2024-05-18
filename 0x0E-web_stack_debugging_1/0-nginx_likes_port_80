@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-#check if nginx is running and start it if it's not.
-sudo service nginx status
+#check if nginx is listening to port , check if it's running and start it if it's not and then curl localhost.
+apt-get update
+apt-get install nginx
+apt-get install net-tools
 
-sudo service nginx start
+netstat -lpdn
+
+service nginx status
+service nginx start
+curl localhost
