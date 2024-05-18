@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-apt-get update
-apt-get install -y nginx
-service nginx stop
-service nginx status || service nginx start
+#service (init) must say that nginx is not running
+service nginx start > /dev/null
 curl 0:80
+service nginx stop > /dev/null
