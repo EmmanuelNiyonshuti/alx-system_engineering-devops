@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 #check if nginx is running and start it if it's not.
-service nginx status
+sudo service nginx status
 
-service nginx start
+sudo service nginx start
