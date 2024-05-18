@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Function to display DNS information for a subdomain
+display_dns_info() {
+    local subdomain=$1
+    local record_type=$2
+    local destination=$3
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+# Main script
+main() {
+    local domain=$1
+    local subdomain=$2
+    
+    # If only domain argument is provided
+    if [ -z "$subdomain" ]; then
+        subdomains=("www" "lb-01" "web-01" "web-02")
+        for sub in "${subdomains[@]}"; do
+            dns_info=$(dig +short "$sub.$domain")
+            if [ -n "$dns_info" ]; then
+                record_type=$(dig "$sub.$domain" | awk '/ANSWER SECTION/{getline; print $4}')
+                display_dns_info "$sub" "$record_type" "$dns_info"
+            else
+                echo "No DNS information found for subdomain $sub.$domain"
+            fi
+        done
+    else
+        # Query DNS information for the specified subdomain
+        dns_info=$(dig +short "$subdomain.$domain")
+        if [ -n "$dns_info" ]; then
+            record_type=$(dig "$subdomain.$domain" | awk '/ANSWER SECTION/{getline; print $4}')
+            display_dns_info "$subdomain" "$record_type" "$dns_info"
+        else
+            echo "No DNS information found for subdomain $subdomain.$domain"
+        fi
+    fi
+}
+
+# Call the main function with command-line arguments
+main "$@"
