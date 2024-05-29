@@ -1,69 +1,101 @@
-				0x14. MySQL
-![alt text](image-1.png)
-
-		MySQL Infrastructure Setup
-	In this project, I delved into setting up MySQL infrastructure,
+					0x14. MySQL
+	In this project, I learned and practiced about setting up MySQL infrastructure,
 	covering concepts such as database installation, user management, replication, and backup strategies.
 
-![alt text](image.png)
+# MySQL Replication
 
-MySQL 5.7.* Installation
-How To Install Guide - (credits: nuuX - C13)
-Check version:
+![MySQL_Replication](https://raw.githubusercontent.com/kiminzajnr/Python_Projects/master/LW_Minis/MySQL_Replication/img/Repl.png)
+
+## MySQL 5.7.* Installation
+## [How To Install Guide](https://intranet.alxswe.com/concepts/100002) - (credits: [nuuX](https://github.com/nuuxcode) - C13)
+- Check version:
+```
 mysql --version
+```
 
-Create a database on the primary server
+## Create a database on the primary server
+```
 CREATE DATABASE tyrell_corp;
-Create a table
+```
+
+## Create a table
+```
 USE tyrell_corp;
 CREATE TABLE nexus6 (id int auto_increment primary key, name varchar(50));
 
-Add atleast one entry to the table
+```
+
+## Add atleast one entry to the table
+```
 INSERT INTO nexus6(name) VALUES ("Erick");
-Create a new user for the replica
+```
+
+## Create a new user for the replica 
+```
 CREATE USER 'replica_user'@'%' IDENTIFIED BY 'password';
-Grant replication permission
+```
 
+## Grant replication permission
+```
 GRANT REPLICATION SLAVE ON *.* TO 'replica_user'@'%';
+```
 
-Setting up the replication
+# Setting up the replication
 
-Configure master
-Add:
+# Configure master
+
+- Add:
+```
 server-id        = 1
 log_bin          = /var/log/mysql/mysql-bin.log # binary log - record changes made to the db in binary formart
 binlog_do_db     = tyrell_corp
-To:
+```
+- To:
+```
 /etc/mysql/mysql.conf.d/mysqld.cnf
+```
 
-Restart MySQL
+- Restart MySQL
+```
 sudo systemctl restart mysql
+```
 
-Get Binary log coordinates from master
+- Get Binary log coordinates from master
 
+```
 FLUSH TABLES WITH READ LOCK;
-
 SHOW MASTER STATUS;
+```
 
-Migrate existing data to slave
-Create a mysqldump utility
+## Migrate existing data to slave
 
-sudo mysqldump tyrell_corp > tyrell_corp.sql;
+- Create a mysqldump utility
+```
+mysqldump tyrell_corp > tyrell_corp.sql;
+```
 
+```
 scp -i ~/.ssh/priv.key tyrell_corp.sql ubuntu@slave_ip:/tmp/
+```
 
-create tyrell_corp database in slave
-
+- create `tyrell_corp` database in slave
+```
 CREATE DATABASE tyrell_corp;
+```
 
-import the snapshot
+- import the snapshot
+```
 sudo mysql tyrell_corp < /tmp/tyrell_corp.sql
+```
 
-Unlock tables in master
+- Unlock tables in master
+```
 UNLOCK TABLES;
+```
 
-Configure slave
-Add:
+# Configure slave
+- Add:
+```
 server-id               = 2
 log_bin                 = /var/log/mysql/mysql-bin.log
 binlog_do_db            = tyrell_corp
@@ -71,21 +103,39 @@ relay-log               = /var/log/mysql/mysql-relay-bin.log
 # Contain everything read from master bin log
 # Store events that need to be applied to slave db locally
 # Events are read from relay log and applied to slave
-To:
+```
+
+- To:
+```
 /etc/mysql/mysql.conf.d/mysqld.cnf
-restart MySQL
+```
+
+- restart MySQL
+```
 sudo systemctl restart mysql
-Testing Replication
-On slave, configure replication settings by running:
+```
+
+# Testing Replication
+
+- On slave, configure replication settings by running:
+
+```
 CHANGE MASTER TO
 MASTER_HOST='master_ip',
 MASTER_USER='replica_user',
 MASTER_PASSWORD='password#70',
 MASTER_LOG_FILE='mysql-bin.000001',
 MASTER_LOG_POS=154;
+```
 
-Activate slave
+- Activate slave
+```
 START SLAVE;
-Show slave state
+```
+
+- Show slave state
+```
 SHOW SLAVE STATUS\G;
-Creating an entry in master should now reflect in slave
+```
+
+- Creating an entry in master should now reflect in slave
