@@ -1,17 +1,91 @@
 				0x14. MySQL
+![alt text](image-1.png)
 
 		MySQL Infrastructure Setup
-	In this project, I delved into setting up a robust MySQL infrastructure,
+	In this project, I delved into setting up MySQL infrastructure,
 	covering concepts such as database installation, user management, replication, and backup strategies.
-	By engaging with this project, I learned essential DevOps and SysAdmin tasks related to MySQL administration
-	and web stack debugging.
-	Through hands-on experience, I learned how to set up a primary-replica cluster,
-	ensuring redundancy and load distribution while implementing effective backup strategies.
 
-	Throughout this project, I explored key MySQL concepts, including database administration, replication,
-	and backup strategies. I set up MySQL servers, created users with appropriate permissions,
-	and established replication between primary and replica servers.
-	By completing these tasks, I gained a deep understanding of MySQL infrastructure setup and maintenance,
-	enabling me to handle critical database operations with confidence.
-	Let's embark on this journey to master MySQL infrastructure deployment and management!
+![alt text](image.png)
 
+MySQL 5.7.* Installation
+How To Install Guide - (credits: nuuX - C13)
+Check version:
+mysql --version
+
+Create a database on the primary server
+CREATE DATABASE tyrell_corp;
+Create a table
+USE tyrell_corp;
+CREATE TABLE nexus6 (id int auto_increment primary key, name varchar(50));
+
+Add atleast one entry to the table
+INSERT INTO nexus6(name) VALUES ("Erick");
+Create a new user for the replica
+CREATE USER 'replica_user'@'%' IDENTIFIED BY 'password';
+Grant replication permission
+
+GRANT REPLICATION SLAVE ON *.* TO 'replica_user'@'%';
+
+Setting up the replication
+
+Configure master
+Add:
+server-id        = 1
+log_bin          = /var/log/mysql/mysql-bin.log # binary log - record changes made to the db in binary formart
+binlog_do_db     = tyrell_corp
+To:
+/etc/mysql/mysql.conf.d/mysqld.cnf
+
+Restart MySQL
+sudo systemctl restart mysql
+
+Get Binary log coordinates from master
+
+FLUSH TABLES WITH READ LOCK;
+
+SHOW MASTER STATUS;
+
+Migrate existing data to slave
+Create a mysqldump utility
+
+sudo mysqldump tyrell_corp > tyrell_corp.sql;
+
+scp -i ~/.ssh/priv.key tyrell_corp.sql ubuntu@slave_ip:/tmp/
+
+create tyrell_corp database in slave
+
+CREATE DATABASE tyrell_corp;
+
+import the snapshot
+sudo mysql tyrell_corp < /tmp/tyrell_corp.sql
+
+Unlock tables in master
+UNLOCK TABLES;
+
+Configure slave
+Add:
+server-id               = 2
+log_bin                 = /var/log/mysql/mysql-bin.log
+binlog_do_db            = tyrell_corp
+relay-log               = /var/log/mysql/mysql-relay-bin.log 
+# Contain everything read from master bin log
+# Store events that need to be applied to slave db locally
+# Events are read from relay log and applied to slave
+To:
+/etc/mysql/mysql.conf.d/mysqld.cnf
+restart MySQL
+sudo systemctl restart mysql
+Testing Replication
+On slave, configure replication settings by running:
+CHANGE MASTER TO
+MASTER_HOST='master_ip',
+MASTER_USER='replica_user',
+MASTER_PASSWORD='password#70',
+MASTER_LOG_FILE='mysql-bin.000001',
+MASTER_LOG_POS=154;
+
+Activate slave
+START SLAVE;
+Show slave state
+SHOW SLAVE STATUS\G;
+Creating an entry in master should now reflect in slave
