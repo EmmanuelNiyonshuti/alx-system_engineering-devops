@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# run a command as a privileged user
+USER=$1
+
+sudo -u "${USER}" whoami
