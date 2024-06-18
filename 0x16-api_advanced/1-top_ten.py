@@ -4,6 +4,7 @@ Make a GET request to Reddit API
 """
 import requests
 
+
 def top_ten(subreddit):
     """
     Make a GET request to /hot end point on Reddit API
@@ -14,7 +15,7 @@ def top_ten(subreddit):
     r = requests.get(url, headers=headers, allow_redirects=False)
     if r.status_code == 200:
         obj = r.json()
-        for i in range(0, 9):
+        for i in range(0, 10):
             titles = obj["data"]["children"][i]["data"]["title"]
             print(titles)
     else:
