@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Make a GET request to Reddit API 
+Make a GET request to Reddit API
 """
 import requests
 
@@ -14,8 +14,8 @@ def top_ten(subreddit):
     r = requests.get(url, headers=headers, allow_redirects=False)
     if r.status_code == 200:
         obj = r.json()
-        print(titles)
         for i in range(0, 9):
             titles = obj["data"]["children"][i]["data"]["title"]
             print(titles)
-    print(None)
+    else:
+        print(None)
