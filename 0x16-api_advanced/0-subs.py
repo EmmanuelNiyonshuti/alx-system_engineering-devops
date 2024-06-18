@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Make a GET request to Reddit API
+contains a function that make a GET request to Reddit API
 """
 import requests
 
