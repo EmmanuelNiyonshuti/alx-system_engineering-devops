@@ -10,7 +10,7 @@ def top_ten(subreddit):
     and prints the first 10 hot posts listed for a given subreddit.
     """
     headers = {"User-Agent": "Learner/1.0 (Learner, python3-requests)"}
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10&raw_json=1"
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?raw_json=1"
     r = requests.get(url, headers=headers, allow_redirects=False)
     if r.status_code == 200:
         obj = r.json()
