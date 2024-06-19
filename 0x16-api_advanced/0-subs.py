@@ -26,6 +26,6 @@ def number_of_subscribers(subreddit):
             obj = r.json()
             subs = obj["data"]["subscribers"]
             return subs
-        except (KeyError, TypeError):
+        except (KeyError, TypeError, NameError):
             return 0
     return 0
