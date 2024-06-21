@@ -1,4 +1,4 @@
-#find and fix a bug on apache webserver
+#find and fix a bug on apache2 webserver
 
 include stdlib
 

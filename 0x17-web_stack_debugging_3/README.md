@@ -14,7 +14,23 @@ The web stack you are debugging today is a Wordpress website running on a LAMP s
 ## Overview
 
 In this project I used ``tmux`` and ``strace`` command line tool to identify and fix the bug that was causing apache2 webserver to returng 500 when curl -sI localhost.
-basically I used tmux to run two separate terminal  windows
-in one terminal I identified the process id of apache2 webserver by using ```pidof apache2``` then I attached the pid to trace by ```trace -p <pid>```.
-in another terminal window I run ``curl -sI localhost`` as expected the webserver gave me a 500 internal server error but this helped me identify the issue with trace (it was attached to the process) turned out there was a typo in wp-settings.php file. 
-then I wrote a puppet manifest that fix the typo. 
+basically I used tmux to run two separate terminal  windows.
+
+in one terminalI identified the process id of apache2 webserver by using
+the command:
+```
+pidof apache2
+
+``` 
+
+then I attached the pid to trace by:
+```
+trace -p <pid>
+```
+
+in another terminal window I run
+```
+curl -sI localhost
+```
+as expected the webserver gave me a 500 internal server error but this helped me identify the issue using trace! turned out there was a typo in wp-settings.php file. 
+then I wrote a puppet manifest that fix the typo.
