@@ -1,13 +1,6 @@
 #find and fix a bug on apache2 webserver
 
-include stdlib
-
-service {'apache2':
-  ensure => running ,
+exec {'fix-wordpress-website':
+  command => 'sed -i s/phpp/php/g /var/www/html/wp-settings.php',
+  path    => '/usr/local/bin/:/bin/'
 }
-file_line {'correct_class_wp_locale':
-  path  => '/var/www/html/wp-settings.php',
-  match => '/class-wp-locale.phpp',
-  line  => "require_once( ABSPATH . WPINC . '/class-wp-locale.php' );",
-}
-
