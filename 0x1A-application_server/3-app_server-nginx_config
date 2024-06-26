@@ -1,0 +1,15 @@
+#Configure nginx to serve page from the route /airbnb-onepage/
+
+server {
+        listen 34.232.68.210:80;
+        server_name techspot.tech;
+
+        location /airbnb-onepage/ {
+                include proxy_params;
+                proxy_pass http://127.0.0.1:5000;
+        }
+	location ~ /airbnb-dynamic/number_odd_or_even/(\d+)$ {
+		include proxy_params;
+		proxy_pass http://127.0.0.1:5001/number_odd_or_even/$1;
+	}
+}
