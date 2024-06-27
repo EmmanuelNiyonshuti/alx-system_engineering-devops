@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Find the Gunicorn master process PID
+MASTER_PID=$(pgrep -f 'gunicorn' | head -n 1)
+
+# Check if the master PID was found
+if [ -z "$MASTER_PID" ]; then
+  echo "Gunicorn master process not found."
+  exit 1
+fi
+
+# Send the SIGUSR2 signal to the Gunicorn master process
+if kill -SIGUSR2 "$MASTER_PID"; then
+  echo "Gunicorn master process (PID: $MASTER_PID) reloaded successfully."
+else
+  echo "Failed to reload Gunicorn master process."
+  exit 1
+fi
