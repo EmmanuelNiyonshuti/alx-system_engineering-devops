@@ -1,7 +1,7 @@
 #Configure nginx to serve page from the route /airbnb-onepage/
 
 server {
-	listen 34.232.68.210:80;
+	listen 80;
 	server_name techspot.tech;
 
 	location /airbnb-onepage/ {
